@@ -1,5 +1,6 @@
 import os
 import pickle
+import spacy
 from collections import OrderedDict
 from typing import List
 from operators import operators
@@ -84,9 +85,24 @@ else:
         else:
             input_tokens = query.split(' ')
 
+            # Преобразовать в нижний регистр
+            input_tokens_lower = []
+            for word in input_tokens:
+                if word != "AND" and word != "OR" and word != "NOT":
+                    input_tokens_lower.append(word.lower())
+                else:
+                    input_tokens_lower.append(word)
+
+            # Лемматизация - приведение к нормальной форме
+            input_tokens_lemm = []
+            nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])
+            doc = spacy.tokens.Doc(nlp.vocab, words=input_tokens_lower)
+            for token in doc:
+                input_tokens_lemm.append(token.lemma_)
+
             # Представим запрос в обратной польской нотации
             # Так с ними будет проще работать
-            rpn = ShuntingYard(input_tokens).get_RPN()
+            rpn = ShuntingYard(input_tokens_lemm).get_RPN()
 
         stack = []
         all_document_ids = [docID for docID in docID_doc_map.keys()]

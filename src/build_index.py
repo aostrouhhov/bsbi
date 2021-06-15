@@ -3,7 +3,7 @@ from bsbi import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--size', type=int, default='10240', help='Memory block size in KB')
-parser.add_argument('-d', '--dir', type=str, default='../dataset', help='Path to directory with text corpus')
+parser.add_argument('-d', '--dir', type=str, default='dataset', help='Path to directory with text corpus')
 
 args = parser.parse_args()
 

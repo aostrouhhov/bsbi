@@ -4,55 +4,64 @@ Task for Information Retrieaval course - Blocked Sort-Basing Indexing
 Dataset was taken from here: http://kopiwiki.dsd.sztaki.hu/
 
 ## Getting started
+Project structure:
+```
+dataset/             - testing dataset
+src/bsbi.py          - Blocked Sort-Basing Indexing algorithm implementation
+src/build_index.py   - BSBI runner
+src/find.py          - Search runner
+src/operators.py     - Boolean operators used in search query
+src/shunting_yard.py - Shunting Yard algorithm implementation for search query parsing
+```
 
 ### Development
 
 Run and provision the VM with Vagrant
 ```
-
 $ vagrant up
-
 ```
 
 Connect to the VM
 ```
-
 $ vagrant ssh
-
 ```
 
 `src` and `dataset` folders should have been copied to `/home/vagrant`. You can edit source code _on your machine_ with your favourite editor.
 
 Just sync when you want to see your edits in the VM:
 ```
-
 $ rsync -a /vagrant/src/ /home/vagrant/src/
-
 ```
 
 ### Run
-Inside of the VM.
+Run and provision the VM with Vagrant
+```
+$ vagrant up
+```
+
+Connect to the VM
+```
+$ vagrant ssh
+```
 
 Build index:
 ```
-
-$ python3 src/build_index.py [-s SIZE] [-d DIR]
-
+$ python3 src/build_index.py
 ```
 ```
 Flags:
   -s SIZE, --size SIZE  Block size in KB (def: "10240" aka 10 MB)
-  -d DIR, --dir DIR     Path to directory with text corpus (def: "../dataset")
+  -d DIR, --dir DIR     Path to directory with text corpus (def: "dataset")
 ```
 
 Run search:
 ```
-
-$ python3 find.py "apple & orange | peach"
-
+$ python3 src/find.py
 ```
 
-### Main concept (russian)
+Enter your query, for example: `woodbridge AND NOT sturbridge`
+
+## Main concept (Russian)
 Строим индекс методом BSBI.
 ```
 список_пар = []
